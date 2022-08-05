@@ -42,6 +42,8 @@ urlpatterns += [
         SpectacularSwaggerView.as_view(url_name="api-schema"),
         name="api-docs",
     ),
+    path(r'api/auth/', include('djoser.urls')),
+    path(r'api/auth/', include('djoser.urls.authtoken')),
 ]
 {%- endif %}
 
