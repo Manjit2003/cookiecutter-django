@@ -1,8 +1,8 @@
 from django.contrib.auth.models import AbstractUser
-from django.db.models import CharField
+from django.db.models import CharField, EmailField
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-
+from {{ cookiecutter.project_slug }}.users.manager import UserManager
 
 class User(AbstractUser):
     """
@@ -15,6 +15,15 @@ class User(AbstractUser):
     name = CharField(_("Name of User"), blank=True, max_length=255)
     first_name = None  # type: ignore
     last_name = None  # type: ignore
+    
+    username = None
+    email = EmailField(_('email address'), unique=True)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+    
+
+    objects = UserManager()
 
     def get_absolute_url(self):
         """Get url for user's detail view.
